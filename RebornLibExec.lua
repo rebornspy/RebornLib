@@ -12,12 +12,18 @@
 ]]
 
 local RebornLib = {}
-
-if getgenv and getgenv().RebornLib then
-	return getgenv().RebornLib
-end
-
 RebornLib.__index = RebornLib
+
+do
+    local ok, g = pcall(getgenv)
+    if ok and type(g) == "table" then
+        if g.RebornLib_ExecGui and g.RebornLib_ExecGui.Parent then
+            pcall(function()
+                g.RebornLib_ExecGui:Destroy()
+            end)
+        end
+    end
+end
 
 --// Services
 local Players = game:GetService("Players")
@@ -176,17 +182,39 @@ end
 
 --// Root ScreenGui
 local function getSafeParent()
-	local ok, ui = pcall(gethui)
-	if ok and typeof(ui) == "Instance" then
-		return ui
-	end
+    local ok, ui = pcall(gethui)
+    if ok and typeof(ui) == "Instance" then
+        return ui
+    end
 
-	local core = game:FindFirstChildOfClass("CoreGui")
-	if core then
-		return core
-	end
+    local core = game:FindFirstChildOfClass("CoreGui")
+    if core then
+        return core
+    end
 
-	return LocalPlayer:WaitForChild("PlayerGui")
+    -- executor‑only: no PlayerGui fallback
+    return nil
+end
+
+local function createScreenGui()
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "RebornLib"
+    gui.ResetOnSpawn = false
+    gui.IgnoreGuiInset = true
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+
+    local parent = getSafeParent()
+    if parent then
+        gui.Parent = parent
+    end
+
+    -- remember last gui for hot reload visibility
+    local ok, g = pcall(getgenv)
+    if ok and type(g) == "table" then
+        g.RebornLib_ExecGui = gui
+    end
+
+    return gui
 end
 
 local function createScreenGui()
@@ -690,34 +718,28 @@ local RunService = game:GetService("RunService")
 local camera = workspace.CurrentCamera
 
 function Window:_startMouseEnforceLoop()
-	if self._mouseLoopRunning then return end
-	self._mouseLoopRunning = true
+    if self._mouseLoopRunning then return end
+    self._mouseLoopRunning = true
 
-	self._mouseLoop = RunService.RenderStepped:Connect(function()
-		if not self._mainFrame.Visible then return end
+    self._mouseLoop = RunService.RenderStepped:Connect(function()
+        if not (self._mainFrame.Visible or self._bootFrame.Visible) then return end
+        UIS.MouseBehavior = Enum.MouseBehavior.Default
+        UIS.MouseIconEnabled = true
+    end)
 
-		if UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
-			UIS.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
-			UIS.MouseIconEnabled = false
-		else
-			UIS.MouseBehavior = Enum.MouseBehavior.Default
-			UIS.MouseIconEnabled = true
-		end
-	end)
+    task.defer(function()
+        if self._mainFrame.Visible or self._bootFrame.Visible then
+            UIS.MouseBehavior = Enum.MouseBehavior.Default
+            UIS.MouseIconEnabled = true
+        end
+    end)
 
-	task.defer(function()
-		if self._mainFrame.Visible or self._bootFrame.Visible then
-			UIS.MouseBehavior = Enum.MouseBehavior.Default
-			UIS.MouseIconEnabled = true
-		end
-	end)
-
-	task.delay(0.03, function() -- ~2 frames later
-		if self._mainFrame.Visible or self._bootFrame.Visible then
-			UIS.MouseBehavior = Enum.MouseBehavior.Default
-			UIS.MouseIconEnabled = true
-		end
-	end)
+    task.delay(0.03, function()
+        if self._mainFrame.Visible or self._bootFrame.Visible then
+            UIS.MouseBehavior = Enum.MouseBehavior.Default
+            UIS.MouseIconEnabled = true
+        end
+    end)
 end
 
 function Window:_stopMouseEnforceLoop()
