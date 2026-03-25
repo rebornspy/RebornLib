@@ -1,4 +1,3 @@
-
 --[[
 
 	RebornLib Interface Suite
@@ -14,6 +13,7 @@
 local RebornLib = {}
 RebornLib.__index = RebornLib
 
+--// Hot Reload
 do
     local ok, g = pcall(getgenv)
     if ok and type(g) == "table" then
@@ -25,7 +25,7 @@ do
     end
 end
 
---// Services
+--// Useful Services
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 local UIS = game:GetService("UserInputService")
@@ -33,12 +33,13 @@ local RunService = game:GetService("RunService")
 
 local LocalPlayer = Players.LocalPlayer
 
+--// Unlock Mouse
 task.spawn(function()
-	repeat task.wait() until workspace.CurrentCamera
-	task.wait(0.15)
+    repeat task.wait() until workspace.CurrentCamera
+    task.wait(0.15)
 
-	UIS.MouseBehavior = Enum.MouseBehavior.Default
-	UIS.MouseIconEnabled = true
+    UIS.MouseBehavior = Enum.MouseBehavior.Default
+    UIS.MouseIconEnabled = true
 end)
 
 --// Themes
@@ -134,53 +135,53 @@ RebornLib.Themes = {
 	},
 }
 
---// Utility: Rounded corners
+--// Utility: Rounded Corners
 local function addCorner(instance, radius)
-	local c = Instance.new("UICorner")
-	c.CornerRadius = UDim.new(0, radius)
-	c.Parent = instance
-	return c
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, radius)
+    c.Parent = instance
+    return c
 end
 
---// Utility: Draggable topbar
+--// Utility: Draggable Topbar
 local function makeDraggable(topbar, window)
-	local dragging = false
-	local dragStart
-	local startPos
+    local dragging = false
+    local dragStart
+    local startPos
 
-	topbar.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			dragging = true
-			dragStart = input.Position
-			startPos = window.Position
-		end
-	end)
+    topbar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true
+            dragStart = input.Position
+            startPos = window.Position
+        end
+    end)
 
-	UIS.InputChanged:Connect(function(input)
-		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-			local delta = input.Position - dragStart
-			window.Position = UDim2.new(
-				startPos.X.Scale,
-				startPos.X.Offset + delta.X,
-				startPos.Y.Scale,
-				startPos.Y.Offset + delta.Y
-			)
-		end
-	end)
+    UIS.InputChanged:Connect(function(input)
+        if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+            local delta = input.Position - dragStart
+            window.Position = UDim2.new(
+                startPos.X.Scale,
+                startPos.X.Offset + delta.X,
+                startPos.Y.Scale,
+                startPos.Y.Offset + delta.Y
+            )
+        end
+    end)
 
-	UIS.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			dragging = false
-		end
-	end)
+    UIS.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = false
+        end
+    end)
 end
 
---// Utility: Simple tween
+--// Utility: Simple Tweening
 local function tween(obj, time, props)
-	TweenService:Create(obj, TweenInfo.new(time, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), props):Play()
+    TweenService:Create(obj, TweenInfo.new(time, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), props):Play()
 end
 
---// Root ScreenGui
+--// Executor Only Parenting
 local function getSafeParent()
     local ok, ui = pcall(gethui)
     if ok and typeof(ui) == "Instance" then
@@ -192,8 +193,7 @@ local function getSafeParent()
         return core
     end
 
-    -- executor‑only: no PlayerGui fallback
-    return nil
+    return nil -- executor‑only: no PlayerGui fallback
 end
 
 local function createScreenGui()
@@ -208,7 +208,7 @@ local function createScreenGui()
         gui.Parent = parent
     end
 
-    -- remember last gui for hot reload visibility
+    -- store for hot reload
     local ok, g = pcall(getgenv)
     if ok and type(g) == "table" then
         g.RebornLib_ExecGui = gui
@@ -217,31 +217,19 @@ local function createScreenGui()
     return gui
 end
 
-local function createScreenGui()
-	local gui = Instance.new("ScreenGui")
-	gui.Name = "RebornLib"
-	gui.ResetOnSpawn = false
-	gui.IgnoreGuiInset = true
-	gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-	gui.Parent = getSafeParent()
-	return gui
-end
-
---// Window object
+--// Objects
 local Window = {}
 Window.__index = Window
 
---// Tab object
 local Tab = {}
 Tab.__index = Tab
 
---// Section object
 local Section = {}
 Section.__index = Section
 
---------------------------------------------------------
+----------------------------------------------------------------
 -- WINDOW CREATION
---------------------------------------------------------
+----------------------------------------------------------------
 
 function RebornLib:CreateWindow(config)
 	config = config or {}
@@ -647,9 +635,9 @@ function RebornLib:CreateWindow(config)
 	return self
 end
 
---------------------------------------------------------
+----------------------------------------------------------------
 -- WINDOW METHODS
---------------------------------------------------------
+----------------------------------------------------------------
 
 function Window:SetTitle(text)
 	self.MainTitle = text
@@ -709,12 +697,10 @@ function Window:_applyTheme()
 	end
 end
 
---------------------------------------------------------
--- UI TOGGLE API
---------------------------------------------------------
+----------------------------------------------------------------
+-- UI TOGGLE API (patched)
+----------------------------------------------------------------
 
-local UIS = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
 local camera = workspace.CurrentCamera
 
 function Window:_startMouseEnforceLoop()
@@ -743,123 +729,27 @@ function Window:_startMouseEnforceLoop()
 end
 
 function Window:_stopMouseEnforceLoop()
-	if self._mouseLoop then
-		self._mouseLoop:Disconnect()
-		self._mouseLoop = nil
-	end
-	self._mouseLoopRunning = false
+    if self._mouseLoop then
+        self._mouseLoop:Disconnect()
+        self._mouseLoop = nil
+    end
+    self._mouseLoopRunning = false
 
-	local inFirstPerson =
-		(camera.CFrame.Position - camera.Focus.Position).Magnitude < 1
+    local inFirstPerson =
+        (camera.CFrame.Position - camera.Focus.Position).Magnitude < 1
 
-	if inFirstPerson then
-		UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
-		UIS.MouseIconEnabled = false
-	else
-		UIS.MouseBehavior = Enum.MouseBehavior.Default
-		UIS.MouseIconEnabled = true
-	end
+    if inFirstPerson then
+        UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
+        UIS.MouseIconEnabled = false
+    else
+        UIS.MouseBehavior = Enum.MouseBehavior.Default
+        UIS.MouseIconEnabled = true
+    end
 end
 
--- Close the UI (both main + boot)
-function Window:CloseUI()
-	if not self._mainFrame or not self._bootFrame then return end
-	self._mainFrame.Visible = false
-	self._bootFrame.Visible = false
-
-	self:_stopMouseEnforceLoop()
-end
-
--- Open the UI (reopens last active tab)
-function Window:OpenUI()
-	if not self._mainFrame or not self._bootFrame then return end
-	self:ShowMain(self._activeTab)
-
-	self:_startMouseEnforceLoop()
-end
-
--- Toggle the UI (used by keybinds)
-function Window:ToggleUI()
-	if not self._mainFrame or not self._bootFrame then return end
-
-	-- Prevent toggle while binding a key
-	if self._isBindingKey then
-		return
-	end
-
-	if self._mainFrame.Visible then
-		self:CloseUI()
-	else
-		self:OpenUI()
-	end
-end
-
---------------------------------------------------------
-
-function Window:_setActiveTab(tab)
-	if self._activeTab == tab then return end
-	self._activeTab = tab
-
-	local Theme = self.Theme
-
-	for _, t in ipairs(self._tabs) do
-		if t._button and t._label then
-			if t == tab then
-				tween(t._button, 0.15, {
-					BackgroundColor3 = Theme.GradientHover,
-				})
-				tween(t._label, 0.15, {
-					TextColor3 = Theme.Text,
-				})
-				if t._accent then
-					t._accent.Visible = true
-				end
-			else
-				tween(t._button, 0.15, {
-					BackgroundColor3 = Theme.Background,
-				})
-				tween(t._label, 0.15, {
-					TextColor3 = Color3.fromRGB(180, 180, 190),
-				})
-				if t._accent then
-					t._accent.Visible = false
-				end
-			end
-		end
-	end
-
-	for _, t in ipairs(self._tabs) do
-		if t._page then
-			t._page.Visible = (t == tab)    
-		end
-	end 
-end
-
-function Window:_restackNotifications()
-	local holder = self._notificationHolder
-	if not holder then return end
-
-	local children = holder:GetChildren()
-	table.sort(children, function(a, b)
-		return a.LayoutOrder < b.LayoutOrder
-	end)
-
-	for i, notif in ipairs(children) do
-		if notif:IsA("Frame") then
-			notif:TweenPosition(
-				UDim2.new(1, 0, 1, -((i - 1) * 65)),
-				Enum.EasingDirection.Out,
-				Enum.EasingStyle.Quad,
-				0.25,
-				true
-			)
-		end
-	end
-end
-
---------------------------------------------------------
+----------------------------------------------------------------
 -- TAB CREATION
---------------------------------------------------------
+----------------------------------------------------------------
 
 function Window:CreateTab(config)
 	config = config or {}
@@ -1631,8 +1521,12 @@ function Window:Notify(config)
 	end)
 end
 
+----------------------------------------------------------------
+-- EXPORT
+----------------------------------------------------------------
+
 if getgenv then
-	getgenv().RebornLib = RebornLib
+    getgenv().RebornLib = RebornLib
 end
 
 return RebornLib
