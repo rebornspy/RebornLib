@@ -1591,6 +1591,8 @@ function Section:CreateDropdown(config)
     padding.PaddingBottom = UDim.new(0, 4)
     padding.Parent = listFrame
 
+    local open = false
+
     -- Build options
     local function buildOptions()
         for _, child in ipairs(listFrame:GetChildren()) do
@@ -1613,7 +1615,7 @@ function Section:CreateDropdown(config)
             optBtn.ZIndex = 25
             optBtn.Parent = listFrame
             addCorner(optBtn, 4)
-
+            
             optBtn.MouseEnter:Connect(function()
                 tween(optBtn, 0.1, {BackgroundColor3 = Theme.Panel})
             end)
@@ -1625,6 +1627,7 @@ function Section:CreateDropdown(config)
             optBtn.MouseButton1Click:Connect(function()
                 button.Text = tostring(opt)
                 callback(opt)
+                open = false
                 listFrame.Visible = false
                 listFrame.Size = UDim2.new(0, 110, 0, 0)
             end)
@@ -1634,8 +1637,6 @@ function Section:CreateDropdown(config)
     buildOptions()
 
     -- Toggle dropdown
-    local open = false
-
     button.MouseButton1Click:Connect(function()
         open = not open
 
@@ -1654,9 +1655,14 @@ function Section:CreateDropdown(config)
     end)
 
     -- Theme registry
+    window:_registerThemeObject(label, "TextColor3", "Text")
+    window:_registerThemeObject(label, "Font", "Font")
     window:_registerThemeObject(button, "BackgroundColor3", "Background")
     window:_registerThemeObject(button, "TextColor3", "Text")
     window:_registerThemeObject(button, "Font", "Font")
+    window:_registerThemeObject(optbtn, "BackgroundColor3", "Background")
+    window:_registerThemeObject(optbtn, "TextColor3", "Text")
+    window:_registerThemeObject(optbtn, "Font", "Font")
 
     window:_registerThemeObject(listFrame, "BackgroundColor3", "Panel")
 
