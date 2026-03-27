@@ -1660,9 +1660,9 @@ function Section:CreateDropdown(config)
     window:_registerThemeObject(button, "BackgroundColor3", "Background")
     window:_registerThemeObject(button, "TextColor3", "Text")
     window:_registerThemeObject(button, "Font", "Font")
-    window:_registerThemeObject(optbtn, "BackgroundColor3", "Background")
-    window:_registerThemeObject(optbtn, "TextColor3", "Text")
-    window:_registerThemeObject(optbtn, "Font", "Font")
+    window:_registerThemeObject(optBtn, "BackgroundColor3", "Background")
+    window:_registerThemeObject(optBtn, "TextColor3", "Text")
+    window:_registerThemeObject(optBtn, "Font", "Font")
 
     window:_registerThemeObject(listFrame, "BackgroundColor3", "Panel")
 
