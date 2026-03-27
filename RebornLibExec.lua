@@ -1615,12 +1615,18 @@ function Section:CreateDropdown(config)
             optBtn.ZIndex = 25
             optBtn.Parent = listFrame
             addCorner(optBtn, 4)
+
+            window:_registerThemeObject(optBtn, "BackgroundColor3", "Background")
+            window:_registerThemeObject(optBtn, "TextColor3", "Text")
+            window:_registerThemeObject(optBtn, "Font", "Font")
             
             optBtn.MouseEnter:Connect(function()
+                local Theme = window.Theme
                 tween(optBtn, 0.1, {BackgroundColor3 = Theme.Panel})
             end)
 
             optBtn.MouseLeave:Connect(function()
+                local Theme = window.Theme
                 tween(optBtn, 0.1, {BackgroundColor3 = Theme.Background})
             end)
 
@@ -1631,11 +1637,6 @@ function Section:CreateDropdown(config)
                 listFrame.Visible = false
                 listFrame.Size = UDim2.new(0, 110, 0, 0)
             end)
-
-            window:_registerThemeObject(optBtn, "BackgroundColor3", "Background")
-            window:_registerThemeObject(optBtn, "TextColor3", "Text")
-            window:_registerThemeObject(optBtn, "Font", "Font")
-            
         end
     end
 
