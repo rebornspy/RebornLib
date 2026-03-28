@@ -1569,7 +1569,7 @@ function Section:CreateDropdown(config)
     addCorner(button, 6)
 
     -- Dropdown list
-    local listFrame = Instance.new("Frame")
+    local listFrame = Instance.new("ScrollingFrame")
     listFrame.Name = "List"
     listFrame.Size = UDim2.new(0, 110, 0, 0)
     listFrame.Position = UDim2.new(1, -110, 1, 2)
@@ -1578,6 +1578,11 @@ function Section:CreateDropdown(config)
     listFrame.ZIndex = 24
     listFrame.Visible = false
     listFrame.Parent = frame
+    listFrame.ScrollBarThickness = 1
+    listFrame.ScrollBarImageColor3 = Theme.Accent
+    listFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    listFrame.ScrollingDirection = Enum.ScrollingDirection.Y
+    listFrame.CanvasSize = UDim2.fromScale(0, 1)
     addCorner(listFrame, 6)
 
     local listLayout = Instance.new("UIListLayout")
@@ -1668,6 +1673,7 @@ function Section:CreateDropdown(config)
     window:_registerThemeObject(button, "Font", "Font")
 
     window:_registerThemeObject(listFrame, "BackgroundColor3", "Panel")
+    window:_registerThemeObject(listFrame, "ScrollBarImageColor3", "Accent")
 
     return {
         Set = function(v)
