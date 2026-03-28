@@ -1580,7 +1580,6 @@ function Section:CreateDropdown(config)
     listFrame.Parent = window._gui
     listFrame.CanvasSize = UDim2.fromScale(0, 0)
     listFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
-    losiFrame.ScrollingDirection = Enum.ScrollingDirection.Y
     listFrame.ScrollBarThickness = 1
     listFrame.ScrollBarImageColor3 = Theme.Accent
     addCorner(listFrame, 6)
