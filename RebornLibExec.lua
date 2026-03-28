@@ -1578,7 +1578,7 @@ function Section:CreateDropdown(config)
     listFrame.ZIndex = 24
     listFrame.Visible = false
     listFrame.Parent = window._gui
-    listFrame.CanvasSize = UDim2.fromScale(0, 1)
+    listFrame.CanvasSize = UDim2.fromScale(0, 0)
     listFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
     listFrame.ScrollBarThickness = 1
     listFrame.ScrollBarImageColor3 = Theme.Accent
@@ -1622,7 +1622,7 @@ function Section:CreateDropdown(config)
         for _, opt in ipairs(options) do
             local optBtn = Instance.new("TextButton")
             optBtn.Name = "Option"
-            optBtn.Size = UDim2.new(1, -8, 0, 20)
+            optBtn.Size = UDim2.new(0, 0, 0, 0)
             optBtn.BackgroundColor3 = Theme.Background
             optBtn.BorderSizePixel = 0
             optBtn.Font = Theme.Font
