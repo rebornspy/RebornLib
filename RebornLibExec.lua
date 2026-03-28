@@ -1578,11 +1578,10 @@ function Section:CreateDropdown(config)
     listFrame.ZIndex = 24
     listFrame.Visible = false
     listFrame.Parent = frame
+    listFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+    listFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
     listFrame.ScrollBarThickness = 1
     listFrame.ScrollBarImageColor3 = Theme.Accent
-    listFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
-    listFrame.ScrollingDirection = Enum.ScrollingDirection.Y
-    listFrame.CanvasSize = UDim2.fromScale(0, 1)
     addCorner(listFrame, 6)
 
     local listLayout = Instance.new("UIListLayout")
