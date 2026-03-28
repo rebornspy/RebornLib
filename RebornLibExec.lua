@@ -1605,7 +1605,7 @@ function Section:CreateDropdown(config)
     local padding = Instance.new("UIPadding")
     padding.PaddingTop = UDim.new(0, 4)
     padding.PaddingBottom = UDim.new(0, 4)
-    padding.PaddingLeft = UDim.new(0, 4)
+    padding.PaddingLeft = UDim.new(0, 2)
     padding.PaddingRight = UDim.new(0, 2)
     padding.Parent = listFrame
 
