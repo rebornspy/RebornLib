@@ -1577,12 +1577,24 @@ function Section:CreateDropdown(config)
     listFrame.BorderSizePixel = 0
     listFrame.ZIndex = 24
     listFrame.Visible = false
-    listFrame.Parent = frame
+    listFrame.Parent = window._gui
     listFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
     listFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
     listFrame.ScrollBarThickness = 1
     listFrame.ScrollBarImageColor3 = Theme.Accent
     addCorner(listFrame, 6)
+
+    local function updateListPosition()
+    local absPos = button.AbsolutePosition
+    local absSize = button.AbsoluteSize
+        listFrame.Position = UDim2.fromOffset(absPos.X, absPos.Y + absSize.Y + 2)
+    end
+
+    button:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateListPosition)
+    button:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateListPosition)
+    frame:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateListPosition)
+
+    updateListPosition()
 
     local listLayout = Instance.new("UIListLayout")
     listLayout.FillDirection = Enum.FillDirection.Vertical
@@ -1593,6 +1605,8 @@ function Section:CreateDropdown(config)
     local padding = Instance.new("UIPadding")
     padding.PaddingTop = UDim.new(0, 4)
     padding.PaddingBottom = UDim.new(0, 4)
+    padding.PaddingLeft = UDim.new(0, 2)
+    padding.PaddingRight = UDim.new(0, 2)
     padding.Parent = listFrame
 
     local open = false
