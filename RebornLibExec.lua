@@ -1572,7 +1572,7 @@ function Section:CreateDropdown(config)
     local listFrame = Instance.new("ScrollingFrame")
     listFrame.Name = "List"
     listFrame.Size = UDim2.new(0, 110, 0, 0)
-    listFrame.Position = UDim2.new(1, -110, 1, 2)
+    listFrame.Position = UDim2.new(0, 0, 0, 0)
     listFrame.BackgroundColor3 = Theme.Panel
     listFrame.BorderSizePixel = 0
     listFrame.ZIndex = 24
