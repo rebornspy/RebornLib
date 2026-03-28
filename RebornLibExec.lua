@@ -1578,7 +1578,7 @@ function Section:CreateDropdown(config)
     listFrame.ZIndex = 24
     listFrame.Visible = false
     listFrame.Parent = window._gui
-    listFrame.CanvasSize = UDim2.fromScale(0, 0)
+    listFrame.CanvasSize = UDim2.fromScale(0.5, 0)
     listFrame.AutomaticCanvasSize = Enum.AutomaticSize.XY
     listFrame.ScrollBarThickness = 1
     listFrame.ScrollBarImageColor3 = Theme.Accent
@@ -1605,7 +1605,7 @@ function Section:CreateDropdown(config)
     local padding = Instance.new("UIPadding")
     padding.PaddingTop = UDim.new(0, 4)
     padding.PaddingBottom = UDim.new(0, 4)
-    padding.PaddingLeft = UDim.new(0, 2)
+    padding.PaddingLeft = UDim.new(0, 4)
     padding.PaddingRight = UDim.new(0, 2)
     padding.Parent = listFrame
 
