@@ -1621,7 +1621,6 @@ function Section:CreateDropdown(config)
 		for _, opt in ipairs(options) do
 			local optBtn = Instance.new("TextButton")
 			optBtn.Name = "Option"
-			optBtn.AutomaticSize = Enum.AutomaticSize.None
 			optBtn.Size = UDim2.new(1, -8, 0, 20)
 			optBtn.BackgroundColor3 = Theme.Background
 			optBtn.BorderSizePixel = 0
