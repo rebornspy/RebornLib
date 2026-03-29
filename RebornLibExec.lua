@@ -1522,187 +1522,195 @@ end
 
 -- DROPDOWN
 function Section:CreateDropdown(config)
-    config = config or {}
-    local name = config.Name or "Dropdown"
-    local options = config.Options or {}
-    local default = config.Default or nil
-    local callback = config.Callback or function() end
+	config = config or {}
+	local name = config.Name or "Dropdown"
+	local options = config.Options or {}
+	local default = config.Default or nil
+	local callback = config.Callback or function() end
 
-    local window = self._window
-    local Theme = window.Theme
+	local window = self._window
+	local Theme = window.Theme
 
-    -- Container
-    local frame = Instance.new("Frame")
-    frame.Name = "Dropdown"
-    frame.Size = UDim2.new(1, 0, 0, 32)
-    frame.BackgroundTransparency = 1
-    frame.ZIndex = 22
-    frame.Parent = self._frame
+	-- Container
+	local frame = Instance.new("Frame")
+	frame.Name = "Dropdown"
+	frame.Size = UDim2.new(1, 0, 0, 32)
+	frame.BackgroundTransparency = 1
+	frame.ZIndex = 22
+	frame.Parent = self._frame
 
-    -- Label
-    local label = Instance.new("TextLabel")
-    label.Name = "Label"
-    label.Size = UDim2.new(1, -120, 1, 0)
-    label.BackgroundTransparency = 1
-    label.Font = Theme.Font
-    label.Text = name
-    label.TextColor3 = Theme.Text
-    label.TextSize = 14
-    label.TextXAlignment = Enum.TextXAlignment.Left
-    label.ZIndex = 22
-    label.Parent = frame
+	-- Label
+	local label = Instance.new("TextLabel")
+	label.Name = "Label"
+	label.Size = UDim2.new(1, -120, 1, 0)
+	label.BackgroundTransparency = 1
+	label.Font = Theme.Font
+	label.Text = name
+	label.TextColor3 = Theme.Text
+	label.TextSize = 14
+	label.TextXAlignment = Enum.TextXAlignment.Left
+	label.ZIndex = 22
+	label.Parent = frame
 
-    -- Main button
-    local button = Instance.new("TextButton")
-    button.Name = "Button"
-    button.Size = UDim2.new(0, 110, 0, 22)
-    button.Position = UDim2.new(1, -110, 0.5, -11)
-    button.BackgroundColor3 = Theme.Background
-    button.BorderSizePixel = 0
-    button.Font = Theme.Font
-    button.Text = default or "Select"
-    button.TextColor3 = Theme.Text
-    button.TextSize = 14
-    button.AutoButtonColor = false
-    button.ZIndex = 23
-    button.Parent = frame
-    addCorner(button, 6)
+	-- Main button
+	local button = Instance.new("TextButton")
+	button.Name = "Button"
+	button.Size = UDim2.new(0, 110, 0, 22)
+	button.Position = UDim2.new(1, -110, 0.5, -11)
+	button.BackgroundColor3 = Theme.Background
+	button.BorderSizePixel = 0
+	button.Font = Theme.Font
+	button.Text = default or "Select"
+	button.TextColor3 = Theme.Text
+	button.TextSize = 14
+	button.AutoButtonColor = false
+	button.ZIndex = 23
+	button.Parent = frame
+	addCorner(button, 6)
 
-    -- Dropdown list
-    local listFrame = Instance.new("ScrollingFrame")
-    listFrame.Name = "List"
-    listFrame.Size = UDim2.new(0, 110, 0, 0)
-    listFrame.Position = UDim2.new(0, 0, 0, 0)
-    listFrame.BackgroundColor3 = Theme.Panel
-    listFrame.BorderSizePixel = 0
-    listFrame.ZIndex = 24
-    listFrame.Visible = false
-    listFrame.Parent = window._gui
-    listFrame.CanvasSize = UDim2.fromScale(0, 0)
-    listFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
-    listFrame.ScrollBarThickness = 1
-    listFrame.ScrollBarImageColor3 = Theme.Accent
-    addCorner(listFrame, 6)
+	-- Dropdown list
+	local listFrame = Instance.new("ScrollingFrame")
+	listFrame.Name = "List"
+	listFrame.Size = UDim2.new(0, 120, 0, 200)
+	listFrame.Position = UDim2.new(0, 0, 0, 0)
+	listFrame.BackgroundColor3 = Theme.Panel
+	listFrame.BorderSizePixel = 0
+	listFrame.ZIndex = 24
+	listFrame.Visible = false
+	listFrame.Parent = window._gui
+	listFrame.AutomaticCanvasSize = Enum.AutomaticSize.None
+	listFrame.ScrollBarThickness = 1
+	listFrame.ScrollBarImageColor3 = Theme.Accent
+	addCorner(listFrame, 6)
 
-    local function updateListPosition()
-    local absPos = button.AbsolutePosition
-    local absSize = button.AbsoluteSize
-        listFrame.Position = UDim2.fromOffset(absPos.X, absPos.Y + absSize.Y + 2)
-    end
+	local function updateListPosition()
+		local absPos = button.AbsolutePosition
+		local absSize = button.AbsoluteSize
+		listFrame.Position = UDim2.fromOffset(absPos.X, absPos.Y + absSize.Y + 2)
+	end
 
-    button:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateListPosition)
-    button:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateListPosition)
-    frame:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateListPosition)
+	button:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateListPosition)
+	button:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateListPosition)
+	frame:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateListPosition)
 
-    updateListPosition()
+	updateListPosition()
 
-    local listLayout = Instance.new("UIListLayout")
-    listLayout.FillDirection = Enum.FillDirection.Vertical
-    listLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    listLayout.Padding = UDim.new(0, 2)
-    listLayout.Parent = listFrame
+	local listLayout = Instance.new("UIListLayout")
+	listLayout.FillDirection = Enum.FillDirection.Vertical
+	listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	listLayout.Padding = UDim.new(0, 2)
+	listLayout.Parent = listFrame
 
-    local padding = Instance.new("UIPadding")
-    padding.PaddingTop = UDim.new(0, 4)
-    padding.PaddingBottom = UDim.new(0, 4)
-    padding.PaddingLeft = UDim.new(0, 2)
-    padding.PaddingRight = UDim.new(0, 2)
-    padding.Parent = listFrame
+	local padding = Instance.new("UIPadding")
+	padding.PaddingTop = UDim.new(0, 4)
+	padding.PaddingBottom = UDim.new(0, 4)
+	padding.PaddingLeft = UDim.new(0.1, 0)
+	padding.PaddingRight = UDim.new(0.1, 0)
+	padding.Parent = listFrame
 
-    local open = false
+	local open = false
 
-    -- Build options
-    local function buildOptions()
-        for _, child in ipairs(listFrame:GetChildren()) do
-            if child:IsA("TextButton") then
-                child:Destroy()
-            end
-        end
+	-- Build options
+	local function buildOptions()
+		for _, child in ipairs(listFrame:GetChildren()) do
+			if child:IsA("TextButton") then
+				child:Destroy()
+			end
+		end
 
-        for _, opt in ipairs(options) do
-            local optBtn = Instance.new("TextButton")
-            optBtn.Name = "Option"
-            optBtn.Size = UDim2.new(1, -8, 0, 20)
-            optBtn.BackgroundColor3 = Theme.Background
-            optBtn.BorderSizePixel = 0
-            optBtn.Font = Theme.Font
-            optBtn.Text = tostring(opt)
-            optBtn.TextColor3 = Theme.Text
-            optBtn.TextSize = 14
-            optBtn.AutoButtonColor = false
-            optBtn.ZIndex = 25
-            optBtn.Parent = listFrame
-            addCorner(optBtn, 4)
+		for _, opt in ipairs(options) do
+			local optBtn = Instance.new("TextButton")
+			optBtn.Name = "Option"
+			optBtn.AutomaticSize = Enum.AutomaticSize.X
+			optBtn.Size = UDim2.new(1, -8, 0, 20)
+			optBtn.BackgroundColor3 = Theme.Background
+			optBtn.BorderSizePixel = 0
+			optBtn.Font = Theme.Font
+			optBtn.Text = tostring(opt)
+			optBtn.TextColor3 = Theme.Text
+			optBtn.TextSize = 14
+			optBtn.AutoButtonColor = false
+			optBtn.ZIndex = 25
+			optBtn.Parent = listFrame
+			addCorner(optBtn, 4)
 
-            window:_registerThemeObject(optBtn, "BackgroundColor3", "Background")
-            window:_registerThemeObject(optBtn, "TextColor3", "Text")
-            window:_registerThemeObject(optBtn, "Font", "Font")
-            
-            optBtn.MouseEnter:Connect(function()
-                local Theme = window.Theme
-                tween(optBtn, 0.1, {BackgroundColor3 = Theme.Panel})
-            end)
+			local optStroke = Instance.new("UIStroke")
+			optStroke.Name = "Stroke"
+			optStroke.Color = Theme.Text
+			optStroke.Thickness = 0.5
+			optStroke.Transparency = 0
+			optStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+			optStroke.Parent = optBtn
+			
+			window:_registerThemeObject(optBtn, "BackgroundColor3", "Background")
+			window:_registerThemeObject(optBtn, "TextColor3", "Text")
+			window:_registerThemeObject(optBtn, "Font", "Font")
+			
+			window:_registerThemeObject(optStroke, "Color", "Text")
 
-            optBtn.MouseLeave:Connect(function()
-                local Theme = window.Theme
-                tween(optBtn, 0.1, {BackgroundColor3 = Theme.Background})
-            end)
+			optBtn.MouseEnter:Connect(function()
+				local Theme = window.Theme
+				tween(optBtn, 0.1, {BackgroundColor3 = Theme.Panel})
+			end)
 
-            optBtn.MouseButton1Click:Connect(function()
-                button.Text = tostring(opt)
-                callback(opt)
-                open = false
-                listFrame.Visible = false
-                listFrame.Size = UDim2.new(0, 110, 0, 0)
-            end)
-        end
-    end
+			optBtn.MouseLeave:Connect(function()
+				local Theme = window.Theme
+				tween(optBtn, 0.1, {BackgroundColor3 = Theme.Background})
+			end)
 
-    buildOptions()
+			optBtn.MouseButton1Click:Connect(function()
+				button.Text = tostring(opt)
+				callback(opt)
+				open = false
+				listFrame.Visible = false
+				listFrame.Size = UDim2.new(0, 110, 0, 0)
+			end)
+		end
+	end
 
-    -- Toggle dropdown
-    button.MouseButton1Click:Connect(function()
-        open = not open
+	buildOptions()
 
-        if open then
-            listFrame.Visible = true
-            local height = (#options * 22) + 12
-            tween(listFrame, 0.15, {Size = UDim2.new(0, 110, 0, height)})
-        else
-            tween(listFrame, 0.15, {Size = UDim2.new(0, 110, 0, 0)})
-            task.delay(0.15, function()
-                if not open then
-                    listFrame.Visible = false
-                end
-            end)
-        end
-    end)
+	-- Toggle dropdown
+	button.MouseButton1Click:Connect(function()
+		open = not open
 
-    -- Theme registry
-    window:_registerThemeObject(label, "TextColor3", "Text")
-    window:_registerThemeObject(label, "Font", "Font")
-    window:_registerThemeObject(button, "BackgroundColor3", "Background")
-    window:_registerThemeObject(button, "TextColor3", "Text")
-    window:_registerThemeObject(button, "Font", "Font")
+		if open then
+			listFrame.Visible = true
+			tween(listFrame, 0.15, {Size = UDim2.new(0, 120, 0, 200)})
+		else
+			tween(listFrame, 0.15, {Size = UDim2.new(0, 110, 0, 0)})
+			task.delay(0.15, function()
+				if not open then
+					listFrame.Visible = false
+				end
+			end)
+		end
+	end)
 
-    window:_registerThemeObject(listFrame, "BackgroundColor3", "Panel")
-    window:_registerThemeObject(listFrame, "ScrollBarImageColor3", "Accent")
+	-- Theme registry
+	window:_registerThemeObject(label, "TextColor3", "Text")
+	window:_registerThemeObject(label, "Font", "Font")
+	window:_registerThemeObject(button, "BackgroundColor3", "Background")
+	window:_registerThemeObject(button, "TextColor3", "Text")
+	window:_registerThemeObject(button, "Font", "Font")
 
-    return {
-        Set = function(v)
-            button.Text = tostring(v)
-            callback(v)
-        end,
-        Refresh = function(newOptions)
-            options = newOptions
-            buildOptions()
-        end,
-        Get = function()
-            return button.Text
-        end
-    }
+	window:_registerThemeObject(listFrame, "BackgroundColor3", "Panel")
+	window:_registerThemeObject(listFrame, "ScrollBarImageColor3", "Accent")
+
+	return {
+		Set = function(v)
+			button.Text = tostring(v)
+			callback(v)
+		end,
+		Refresh = function(newOptions)
+			options = newOptions
+			buildOptions()
+		end,
+		Get = function()
+			return button.Text
+		end
+	}
 end
-
 --------------------------------------------------------
 -- NOTIFICATIONS
 --------------------------------------------------------
