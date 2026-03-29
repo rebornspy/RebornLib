@@ -1571,8 +1571,8 @@ function Section:CreateDropdown(config)
 	-- Dropdown list
 	local listFrame = Instance.new("ScrollingFrame")
 	listFrame.Name = "List"
-	listFrame.Size = UDim2.new(0, 120, 0, 200)
-	listFrame.Position = UDim2.new(0, 0, 0, 0)
+	listFrame.Size = UDim2.new(0, 200, 0, 200)
+	listFrame.Position = UDim2.fromScale(0.5, 0.5)
 	listFrame.BackgroundColor3 = Theme.Panel
 	listFrame.BorderSizePixel = 0
 	listFrame.ZIndex = 24
@@ -1582,6 +1582,14 @@ function Section:CreateDropdown(config)
 	listFrame.ScrollBarThickness = 1
 	listFrame.ScrollBarImageColor3 = Theme.Accent
 	addCorner(listFrame, 6)
+
+	local listStroke = Instance.new("UIStroke")
+	listStroke.Name = "Stroke"
+	listStroke.Color = Theme.Text
+	listStroke.Thickness = 0.5
+	listStroke.Transparency = 0
+	listStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	listStroke.Parent = listFrame
 
 	local function updateListPosition()
 		local absPos = button.AbsolutePosition
@@ -1675,9 +1683,9 @@ function Section:CreateDropdown(config)
 
 		if open then
 			listFrame.Visible = true
-			tween(listFrame, 0.15, {Size = UDim2.new(0, 120, 0, 200)})
+			tween(listFrame, 0.15, {Size = UDim2.new(0, 200, 0, 200)})
 		else
-			tween(listFrame, 0.15, {Size = UDim2.new(0, 110, 0, 0)})
+			tween(listFrame, 0.15, {Size = UDim2.new(0, 200, 0, 0)})
 			task.delay(0.15, function()
 				if not open then
 					listFrame.Visible = false
@@ -1695,6 +1703,7 @@ function Section:CreateDropdown(config)
 
 	window:_registerThemeObject(listFrame, "BackgroundColor3", "Panel")
 	window:_registerThemeObject(listFrame, "ScrollBarImageColor3", "Accent")
+	window:_registerThemeObject(listStroke, "Color", "Text")
 
 	return {
 		Set = function(v)
