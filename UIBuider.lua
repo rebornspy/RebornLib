@@ -1,5 +1,5 @@
 -- Load RebornLib
-local RebornLib = require(game.ReplicatedStorage.RebornLibStudio)
+local RebornLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/rebornspy/RebornLib/refs/heads/main/RebornLibExec.lua"))()
 
 -- Useful Globals/Services
 local runService = game:GetService("RunService")
