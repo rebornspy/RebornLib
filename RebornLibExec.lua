@@ -1574,7 +1574,7 @@ function Section:CreateDropdown(config)
 	listFrame.Size = UDim2.new(0, 200, 0, 200)
 	listFrame.Position = UDim2.fromScale(0.5, 0.5)
 	listFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-	listFrame.BackgroundColor3 = Theme.Panel
+	listFrame.BackgroundColor3 = Theme.AccentHover
 	listFrame.BorderSizePixel = 0
 	listFrame.ZIndex = 24
 	listFrame.Visible = false
@@ -1587,7 +1587,7 @@ function Section:CreateDropdown(config)
 	
 	local listStroke = Instance.new("UIStroke")
 	listStroke.Name = "Stroke"
-	listStroke.Color = Theme.Text
+	listStroke.Color = Theme.AccentGlow
 	listStroke.Thickness = 0.5
 	listStroke.Transparency = 0.5
 	listStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -1621,7 +1621,7 @@ function Section:CreateDropdown(config)
 			optBtn.Name = "Option"
 			optBtn.AutomaticSize = Enum.AutomaticSize.X
 			optBtn.Size = UDim2.new(1, -8, 0, 20)
-			optBtn.BackgroundColor3 = Theme.Background
+			optBtn.BackgroundColor3 = Theme.Accent
 			optBtn.BorderSizePixel = 0
 			optBtn.Font = Theme.Font
 			optBtn.Text = tostring(opt)
@@ -1631,7 +1631,7 @@ function Section:CreateDropdown(config)
 			optBtn.ZIndex = 25
 			optBtn.Parent = listFrame
 			addCorner(optBtn, 4)
-
+			--[[
 			local optStroke = Instance.new("UIStroke")
 			optStroke.Name = "Stroke"
 			optStroke.Color = Theme.Text
@@ -1639,21 +1639,21 @@ function Section:CreateDropdown(config)
 			optStroke.Transparency = 0.5
 			optStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 			optStroke.Parent = optBtn
-			
-			window:_registerThemeObject(optBtn, "BackgroundColor3", "Background")
+			]]
+			window:_registerThemeObject(optBtn, "BackgroundColor3", "Accent")
 			window:_registerThemeObject(optBtn, "TextColor3", "Text")
 			window:_registerThemeObject(optBtn, "Font", "Font")
 			
-			window:_registerThemeObject(optStroke, "Color", "Text")
+			--window:_registerThemeObject(optStroke, "Color", "Text")
 
 			optBtn.MouseEnter:Connect(function()
 				local Theme = window.Theme
-				tween(optBtn, 0.1, {BackgroundColor3 = Theme.Panel})
+				tween(optBtn, 0.1, {BackgroundColor3 = Theme.AccentGlow})
 			end)
 
 			optBtn.MouseLeave:Connect(function()
 				local Theme = window.Theme
-				tween(optBtn, 0.1, {BackgroundColor3 = Theme.Background})
+				tween(optBtn, 0.1, {BackgroundColor3 = Theme.Accent})
 			end)
 
 			optBtn.MouseButton1Click:Connect(function()
@@ -1692,9 +1692,9 @@ function Section:CreateDropdown(config)
 	window:_registerThemeObject(button, "TextColor3", "Text")
 	window:_registerThemeObject(button, "Font", "Font")
 
-	window:_registerThemeObject(listFrame, "BackgroundColor3", "Panel")
-	window:_registerThemeObject(listFrame, "ScrollBarImageColor3", "Accent")
-	window:_registerThemeObject(listStroke, "Color", "Text")
+	window:_registerThemeObject(listFrame, "BackgroundColor3", "Section")
+	window:_registerThemeObject(listFrame, "ScrollBarImageColor3", "AccentHover")
+	window:_registerThemeObject(listStroke, "Color", "AccentGlow")
 
 	return {
 		Set = function(v)
