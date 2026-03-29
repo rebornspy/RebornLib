@@ -1573,40 +1573,30 @@ function Section:CreateDropdown(config)
 	listFrame.Name = "List"
 	listFrame.Size = UDim2.new(0, 200, 0, 200)
 	listFrame.Position = UDim2.fromScale(0.5, 0.5)
+	listFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	listFrame.BackgroundColor3 = Theme.Panel
 	listFrame.BorderSizePixel = 0
 	listFrame.ZIndex = 24
 	listFrame.Visible = false
 	listFrame.Parent = window._gui
-	listFrame.AutomaticCanvasSize = Enum.AutomaticSize.None
-	listFrame.ScrollBarThickness = 1
+	listFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+	listFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
+	listFrame.ScrollBarThickness = 4
 	listFrame.ScrollBarImageColor3 = Theme.Accent
 	addCorner(listFrame, 6)
-
+	
 	local listStroke = Instance.new("UIStroke")
 	listStroke.Name = "Stroke"
 	listStroke.Color = Theme.Text
 	listStroke.Thickness = 0.5
-	listStroke.Transparency = 0
+	listStroke.Transparency = 0.5
 	listStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	listStroke.Parent = listFrame
-
-	local function updateListPosition()
-		local absPos = button.AbsolutePosition
-		local absSize = button.AbsoluteSize
-		listFrame.Position = UDim2.fromOffset(absPos.X, absPos.Y + absSize.Y + 2)
-	end
-
-	button:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateListPosition)
-	button:GetPropertyChangedSignal("AbsoluteSize"):Connect(updateListPosition)
-	frame:GetPropertyChangedSignal("AbsolutePosition"):Connect(updateListPosition)
-
-	updateListPosition()
-
+	
 	local listLayout = Instance.new("UIListLayout")
 	listLayout.FillDirection = Enum.FillDirection.Vertical
 	listLayout.SortOrder = Enum.SortOrder.LayoutOrder
-	listLayout.Padding = UDim.new(0, 2)
+	listLayout.Padding = UDim.new(0, 5)
 	listLayout.Parent = listFrame
 
 	local padding = Instance.new("UIPadding")
@@ -1629,6 +1619,7 @@ function Section:CreateDropdown(config)
 		for _, opt in ipairs(options) do
 			local optBtn = Instance.new("TextButton")
 			optBtn.Name = "Option"
+			optBtn.AutomaticSize = Enum.AutomaticSize.X
 			optBtn.Size = UDim2.new(1, -8, 0, 20)
 			optBtn.BackgroundColor3 = Theme.Background
 			optBtn.BorderSizePixel = 0
@@ -1645,7 +1636,7 @@ function Section:CreateDropdown(config)
 			optStroke.Name = "Stroke"
 			optStroke.Color = Theme.Text
 			optStroke.Thickness = 0.5
-			optStroke.Transparency = 0
+			optStroke.Transparency = 0.5
 			optStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 			optStroke.Parent = optBtn
 			
@@ -1685,7 +1676,7 @@ function Section:CreateDropdown(config)
 			listFrame.Visible = true
 			tween(listFrame, 0.15, {Size = UDim2.new(0, 200, 0, 200)})
 		else
-			tween(listFrame, 0.15, {Size = UDim2.new(0, 200, 0, 0)})
+			tween(listFrame, 0.15, {Size = UDim2.new(0, 110, 0, 0)})
 			task.delay(0.15, function()
 				if not open then
 					listFrame.Visible = false
@@ -1719,6 +1710,7 @@ function Section:CreateDropdown(config)
 		end
 	}
 end
+
 --------------------------------------------------------
 -- NOTIFICATIONS
 --------------------------------------------------------
