@@ -44,95 +44,161 @@ end)
 
 --// Themes
 RebornLib.Themes = {
-    Default = {
-        Background = Color3.fromRGB(15, 15, 18),
-        Panel = Color3.fromRGB(22, 22, 26),
-        Section = Color3.fromRGB(28, 28, 34),
-        BootBackground = Color3.fromRGB(35, 35, 40),
-        Text = Color3.fromRGB(235, 235, 240),
-        SubtitleText = Color3.fromRGB(180, 180, 190),
-        GradientHover = Color3.fromRGB(255, 255, 255),
-        ButtonHover = Color3.fromRGB(60, 60, 80),
-
-        Accent = Color3.fromRGB(125, 10, 10),
-        AccentHover = Color3.fromRGB(160, 20, 20),
-        AccentGlow = Color3.fromRGB(200, 40, 40),
-
-        Gradient = ColorSequence.new({
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(125, 10, 10)),
-            ColorSequenceKeypoint.new(0.75, Color3.fromRGB(22, 22, 26)),
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(22, 22, 26)),
-        }),
-
-        Font = Enum.Font.Ubuntu,
-        CornerRadius = 10,
-    },
-    ["Blood Moon"] = {
-        Background = Color3.fromRGB(20, 10, 10),
-        Panel = Color3.fromRGB(30, 20, 20),
-        Section = Color3.fromRGB(40, 20, 20),
-        BootBackground = Color3.fromRGB(60, 20, 20),
-        Text = Color3.fromRGB(255, 230, 230),
-        SubtitleText = Color3.fromRGB(210, 190, 190),
-        GradientHover = Color3.fromRGB(255, 255, 255),
-        ButtonHover = Color3.fromRGB(80, 30, 30),
-
-        Accent = Color3.fromRGB(100, 10, 10),
-        AccentHover = Color3.fromRGB(125, 20, 20),
-        AccentGlow = Color3.fromRGB(160, 40, 40),
-
-        Gradient = ColorSequence.new({
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 20, 20)),
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 10, 10)),
-        }),
-
-        Font = Enum.Font.Ubuntu,
-        CornerRadius = 10,
-    },
-    ["Acid Trip"] = {
-        Background = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-        Panel = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-        Section = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-        BootBackground = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-        Text = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-        SubtitleText = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-        GradientHover = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-        ButtonHover = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-
-        Accent = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-        AccentHover = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-        AccentGlow = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
-
-        Gradient = ColorSequence.new({
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))),
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))),
-        }),
-
-        Font = Enum.Font.Ubuntu,
-        CornerRadius = 10,
-    },
-    ["Cerulean Wave"] = { -- CREATORS FAVORITE
-        Background = Color3.fromRGB(20, 25, 35),
-        Panel = Color3.fromRGB(20, 25, 40),
-        Section = Color3.fromRGB(20, 30, 50),
-        BootBackground = Color3.fromRGB(30, 35, 60),
-        Text = Color3.fromRGB(170, 220, 250),
-        SubtitleText = Color3.fromRGB(170, 200, 230),
-        GradientHover = Color3.fromRGB(255, 255, 255),
-        ButtonHover = Color3.fromRGB(20, 40, 100),
-
-        Accent = Color3.fromRGB(20, 70, 170),
-        AccentHover = Color3.fromRGB(20, 100, 200),
-        AccentGlow = Color3.fromRGB(30, 155, 255),
-
-        Gradient = ColorSequence.new({
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(10, 10, 40)),
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 40, 100)),
-        }),
-
-        Font = Enum.Font.Ubuntu,
-        CornerRadius = 10,
-    },
+	Default = {
+		Background = Color3.fromRGB(15, 15, 18),
+		Panel = Color3.fromRGB(22, 22, 26),
+		Section = Color3.fromRGB(28, 28, 34),
+		BootBackground = Color3.fromRGB(35, 35, 40),
+		Text = Color3.fromRGB(235, 235, 240),
+		SubtitleText = Color3.fromRGB(180, 180, 190),
+		GradientHover = Color3.fromRGB(255, 255, 255),
+		ButtonHover = Color3.fromRGB(60, 60, 80),
+		
+		Accent = Color3.fromRGB(125, 10, 10),
+		AccentHover = Color3.fromRGB(160, 20, 20),
+		AccentGlow = Color3.fromRGB(200, 40, 40),
+		
+		Gradient = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(125, 10, 10)),
+			ColorSequenceKeypoint.new(0.75, Color3.fromRGB(22, 22, 26)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(22, 22, 26)),
+		}),
+		
+		Font = Enum.Font.Ubuntu,
+		CornerRadius = 10,
+	},
+	["Blood Moon"] = {
+		Background = Color3.fromRGB(20, 10, 10),
+		Panel = Color3.fromRGB(30, 20, 20),
+		Section = Color3.fromRGB(40, 20, 20),
+		BootBackground = Color3.fromRGB(60, 20, 20),
+		Text = Color3.fromRGB(255, 230, 230),
+		SubtitleText = Color3.fromRGB(210, 190, 190),
+		GradientHover = Color3.fromRGB(255, 255, 255),
+		ButtonHover = Color3.fromRGB(80, 30, 30),
+		
+		Accent = Color3.fromRGB(100, 10, 10),
+		AccentHover = Color3.fromRGB(125, 20, 20),
+		AccentGlow = Color3.fromRGB(160, 40, 40),
+		
+		Gradient = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 20, 20)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 10, 10)),
+		}),
+		
+		Font = Enum.Font.Ubuntu,
+		CornerRadius = 10,
+	},
+	["Acid Trip"] = {
+		Background = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		Panel = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		Section = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		BootBackground = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		Text = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		SubtitleText = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		GradientHover = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		ButtonHover = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		
+		Accent = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		AccentHover = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		AccentGlow = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255)),
+		
+		Gradient = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))),
+		}),
+		
+		Font = Enum.Font.Ubuntu,
+		CornerRadius = 10,
+	},
+	["Cerulean Wave"] = { -- CREATORS FAVORITE
+		Background = Color3.fromRGB(20, 25, 35),
+		Panel = Color3.fromRGB(20, 25, 40),
+		Section = Color3.fromRGB(20, 30, 50),
+		BootBackground = Color3.fromRGB(30, 35, 60),
+		Text = Color3.fromRGB(170, 220, 250),
+		SubtitleText = Color3.fromRGB(170, 200, 230),
+		GradientHover = Color3.fromRGB(255, 255, 255),
+		ButtonHover = Color3.fromRGB(20, 40, 100),
+		
+		Accent = Color3.fromRGB(20, 70, 170),
+		AccentHover = Color3.fromRGB(20, 100, 200),
+		AccentGlow = Color3.fromRGB(30, 155, 255),
+		
+		Gradient = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(10, 10, 40)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 40, 100)),
+		}),
+		
+		Font = Enum.Font.Ubuntu,
+		CornerRadius = 10,
+	},
+	["Deep Forest"] = {
+		Background = Color3.fromRGB(20, 35, 25),
+		Panel = Color3.fromRGB(25, 45, 30),
+		Section = Color3.fromRGB(30, 50, 35),
+		BootBackground = Color3.fromRGB(30, 60, 35),
+		Text = Color3.fromRGB(200, 255, 200),
+		SubtitleText = Color3.fromRGB(180, 255, 180),
+		GradientHover = Color3.fromRGB(255, 255, 255),
+		ButtonHover = Color3.fromRGB(30, 80, 45),
+		
+		Accent = Color3.fromRGB(20, 170, 70),
+		AccentHover = Color3.fromRGB(20, 190, 90),
+		AccentGlow = Color3.fromRGB(30, 210, 90),
+		
+		Gradient = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(10, 40, 10)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 100, 40)),
+		}),
+		
+		Font = Enum.Font.Ubuntu,
+		CornerRadius = 10,
+	},
+	["Monochrome"] = {
+		Background = Color3.fromRGB(20, 20, 20),
+		Panel = Color3.fromRGB(30, 30, 30),
+		Section = Color3.fromRGB(40, 40, 40),
+		BootBackground = Color3.fromRGB(50, 50, 50),
+		Text = Color3.fromRGB(200, 200, 200),
+		SubtitleText = Color3.fromRGB(180, 180, 180),
+		GradientHover = Color3.fromRGB(255, 255, 255),
+		ButtonHover = Color3.fromRGB(50, 50, 50),
+		
+		Accent = Color3.fromRGB(170, 170, 170),
+		AccentHover = Color3.fromRGB(190, 190, 190),
+		AccentGlow = Color3.fromRGB(210, 210, 210),
+		
+		Gradient = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 40, 40)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20)),
+		}),
+		
+		Font = Enum.Font.Ubuntu,
+		CornerRadius = 10,
+	},
+	["Red Stained Glass"] = {
+		Background = Color3.fromRGB(30, 20, 20),
+		Panel = Color3.fromRGB(40, 30, 30),
+		Section = Color3.fromRGB(50, 35, 35),
+		BootBackground = Color3.fromRGB(60, 40, 40),
+		Text = Color3.fromRGB(255, 200, 200),
+		SubtitleText = Color3.fromRGB(255, 180, 180),
+		GradientHover = Color3.fromRGB(255, 100, 100),
+		ButtonHover = Color3.fromRGB(80, 30, 30),
+		
+		Accent = Color3.fromRGB(255, 50, 50),
+		AccentHover = Color3.fromRGB(255, 70, 70),
+		AccentGlow = Color3.fromRGB(255, 100, 100),
+		
+		Gradient = ColorSequence.new({
+			ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 20, 20)),
+			ColorSequenceKeypoint.new(1, Color3.fromRGB(60, 40, 40)),
+		}),
+		
+		Font = Enum.Font.Ubuntu,
+		CornerRadius = 10,
+	},
 }
 
 --// Utility: Rounded Corners
