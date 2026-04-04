@@ -197,7 +197,6 @@ local function mouseTP()
   )
 end
 
--- Toggle in Movement tab
 walkSection:CreateToggle({
   Name = "Mouse TP",
   Default = false,
@@ -221,9 +220,9 @@ local jumpSection = MovementTab:CreateSection({ Name = "Jump Settings" })
 
 jumpSection:CreateSlider({
   Name = "JumpPower",
-  Min = -10,
+  Min = 0,
   Max = 200,
-  Default = 50,
+  Default = 25,
   Step = 5,
   Callback = function(value)
     local char = player.Character or player.CharacterAdded:Wait()
@@ -268,8 +267,8 @@ local gravitySlider = jumpSection:CreateSlider({
 jumpSection:CreateButton({
   Name = "Default Gravity",
   Callback = function()
-    workspace.Gravity = 196.2
-    gravitySlider:Set(196.2)
+    workspace.Gravity = 100
+    gravitySlider:Set(100)
   end,
 })
 
@@ -497,8 +496,8 @@ combatSection:CreateNote({
 local OPKillGrabEnabled = false
 local OPKGConnections
 
-local toX = 100000
-local toY = -1000
+local toX = 0
+local toY = 1e+21
 local toZ = 0
 
 local function startOPKG()
