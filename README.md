@@ -160,13 +160,13 @@ Section:CreateButton({
 ## Themes
 You can choose from a selection of premade themes with custom theme support coming in the future.
 List of current themes:
-- Default
-- Blood Moon
-- Acid Trip
-- Cerulean Wave
-- Deep Forest
-- Monochrome
-- Red Stained Glass
+Default  
+Blood Moon  
+Acid Trip  
+Cerulean Wave  
+Deep Forest  
+Monochrome  
+Red Stained Glass  
 
 More premade themes coming, as well as custom theme support
 
