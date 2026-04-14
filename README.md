@@ -49,14 +49,14 @@ local ExampleSection = Tab:CreateSection({ Name = "Example Section" }) -- Same t
 ```
 
 ## Creating Content
-There are many different components you can create in the content.
+There are many different components you can create in the content.<br>
 List of Current Elements:
-- Button<br>
-- Toggle<br>
-- Slider<br>
-- Text Input<br>
-- Note<br>
-- Dropdown<br>
+- Button
+- Toggle
+- Slider
+- Text Input
+- Note
+- Dropdown
 - Player Dropdown
 
 Creating a Button:
@@ -158,15 +158,15 @@ Section:CreateButton({
 ```
 
 ## Themes
-You can choose from a selection of premade themes with custom theme support coming in the future.
+You can choose from a selection of premade themes with custom theme support coming in the future.<br>
 List of current themes:
-Default<br>
-Blood Moon<br>
-Acid Trip<br>
-Cerulean Wave<br>
-Deep Forest<br>
-Monochrome<br>
-Red Stained Glass  
+- Default<br>
+- Blood Moon<br>
+- Acid Trip<br>
+- Cerulean Wave<br>
+- Deep Forest<br>
+- Monochrome<br>
+- Red Stained Glass  
 
 More premade themes coming, as well as custom theme support
 
