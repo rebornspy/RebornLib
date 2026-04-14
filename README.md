@@ -51,13 +51,13 @@ local ExampleSection = Tab:CreateSection({ Name = "Example Section" }) -- Same t
 ## Creating Content
 There are many different components you can create in the content.
 List of Current Elements:
-    Button
-    Toggle
-    Slider
-    Text Input
-    Note
-    Dropdown
-    Player Dropdown
+- Button
+- Toggle
+- Slider
+- Text Input
+- Note
+- Dropdown
+- Player Dropdown
 
 Creating a Button:
 ```lua
@@ -73,7 +73,7 @@ Creating a Toggle:
 ```lua
 Section:CreateToggle({
     Name = "Toggle",     -- Displayed name of the toggle
-    Default = False     -- Default state of the toggle
+    Default = False,     -- Default state of the toggle
     Callback = function(state)
     -- Toggle logic goes here
     end,
@@ -98,8 +98,8 @@ Creating a Text Input:
 ```lua
 Section:CreateInput({
     Name = "Input",     -- Displayed name of the Input
-    Placeholder = "Input"   -- Displayed text when user is typing
-    Default = ""        -- Displayed text when Input is empty
+    Placeholder = "Input",   -- Displayed text when user is typing
+    Default = "",        -- Displayed text when Input is empty
     Callback = function(text)
     -- Input logic goes here
     end,
@@ -133,8 +133,8 @@ Section:CreateDropdown({
 Creating a Player Dropdown:
 ```lua
 Section:CreatePlayerDropdown({
-    Name = "Players"
-    Default = "Select"
+    Name = "Players",
+    Default = "Select",
     Callback = function(playerObj, playerName)
     -- Dropdown logic goes here
 })
@@ -160,12 +160,92 @@ Section:CreateButton({
 ## Themes
 You can choose from a selection of premade themes with custom theme support coming in the future.
 List of current themes:
-    Default
-    Blood Moon
-    Acid Trip
-    Cerulean Wave
-    Deep Forest
-    Monochrome
-    Red Stained Glass
+- Default
+- Blood Moon
+- Acid Trip
+- Cerulean Wave
+- Deep Forest
+- Monochrome
+- Red Stained Glass
 
 More premade themes coming, as well as custom theme support
+
+## Example Script:
+```lua
+local RebornLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/rebornspy/RebornLib/refs/heads/main/RebornLibExec.lua"))()
+
+local Window = RebornLib:CreateWindow({
+    Name = "Example Window",
+    BootTitle = "Boot",
+    MainTitle = "Main",
+    Theme = "Deep Forest"
+})
+
+local Tab = Window:CreateTab({ Name = "Example Tab" })
+
+local Section = Tab:CreateSection({ Name = "Example Section" })
+
+Section:CreateButton({
+    Name = "Notification",
+    Callback = function()
+        Window:Notify({
+            Title = "Button Pressed",
+            Content = "The Button has been pressed",
+            Duration = 2.5,
+        })
+    end,
+})
+
+Section:CreateToggle({
+    Name = "Toggle",
+    Default = False,
+    Callback = function(state)
+        print("Toggled to:", state)
+    end,
+})
+
+Section:CreateSlider({
+    Name = "Slider",
+    Default = 5,
+    Step = 1,
+    Min = 0,
+    Max = 10,
+    Callback = function(value)
+        print("Changed slider to:", value)
+    end,
+})
+
+Section:CreateInput({
+    Name = "Input",
+    Placeholder = "Input"
+    Default = ""
+    Callback = function(text)
+        print("Changed text to:", text)
+    end,
+})
+
+Section:CreateNote({
+    Text = "Note"
+})
+
+Section:CreateDropdown({
+    Name = "Dropdown",
+    Options = {
+        "Option 1",
+        "Option 2",
+        "Option 3",
+    },
+    Default = "Pick an Option",
+    Callback = function(opt)
+        print("Changed selection to:", opt)
+    end,
+})
+
+Section:CreatePlayerDropdown({
+    Name = "Players"
+    Default = "Select"
+    Callback = function(playerObj, playerName)
+        print("Selected Player:", playerName, playerObj)
+})
+
+```
