@@ -1,4 +1,4 @@
-# PhoenixExec
+# Phoenix
 
 ## Getting Started
 To use this library, you first need to load it. Paste this line at the top of your script to load Phoenix.
