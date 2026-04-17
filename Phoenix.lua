@@ -437,7 +437,7 @@ function Phoenix:CreateWindow(config)
 	end)
 
 	function Window:_loadConfig()
-		local path = "Phoenix/" .. (self.Name or "Window") .. ".json"
+		local path = "Phoenix/" .. (config.ConfigSavePath or self.Name) .. ".json"
 		self._configPath = path
 
 		if not isfile(path) then
@@ -1942,7 +1942,7 @@ function Section:CreatePlayerDropdown(config)
 
 	local dropdown = self:CreateDropdown({
 		Name = name,
-		Options = getPlayerNames(),
+		Options = { "Select", getPlayerNames() },
 		Default = config.Default or "Select",
 		ConfigKey = key,
 		Callback = function(selected)
