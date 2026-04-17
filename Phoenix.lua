@@ -1,5 +1,4 @@
 --[[
-
     Phoenix Interface Suite
     by reborb (@rebornspy)
     
@@ -14,7 +13,7 @@
 local Phoenix = {}
 Phoenix.__index = Phoenix
 
---// Hot Reload (executor only)
+--// Hot Reload
 do
 	local ok, g = pcall(getgenv)
 	if ok and type(g) == "table" then
@@ -37,6 +36,9 @@ local HttpService = game:GetService("HttpService")
 local LocalPlayer = Players.LocalPlayer
 
 --// Unlock Mouse once camera exists
+UIS.MouseBehavior = Enum.MouseBehavior.LockCenter
+UIS.MouseIconEnabled = false
+
 task.spawn(function()
 	repeat
 		task.wait()
@@ -46,24 +48,6 @@ task.spawn(function()
 	UIS.MouseBehavior = Enum.MouseBehavior.Default
 	UIS.MouseIconEnabled = true
 end)
-
---// Config Help
-local function readConfig(path)
-	if not isfile(path) then
-		return {}
-	end
-
-	local raw = readfile(path)
-	local ok, data = pcall(function()
-		return HttpService:JSONDecode(raw)
-	end)
-
-	return ok and data or {}
-end
-
-local function writeConfig(path, data)
-	writefile(path, HttpService:JSONEncode(data))
-end
 
 --// Themes
 Phoenix.Themes = {
@@ -266,7 +250,7 @@ local function tween(obj, time, props)
 	TweenService:Create(obj, TweenInfo.new(time, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), props):Play()
 end
 
---// Executor Only Parenting
+--// Safe Parenting
 local function getSafeParent()
 	local ok, ui = pcall(gethui)
 	if ok and typeof(ui) == "Instance" then
@@ -278,7 +262,7 @@ local function getSafeParent()
 		return core
 	end
 
-	return nil -- executor‑only: no PlayerGui fallback
+	return nil
 end
 
 local function createScreenGui()
@@ -842,7 +826,7 @@ function Window:_applyTheme()
 end
 
 ----------------------------------------------------------------
--- UI TOGGLE API (executor‑safe)
+-- UI TOGGLE API
 ----------------------------------------------------------------
 
 local camera = workspace.CurrentCamera
@@ -926,7 +910,7 @@ function Window:ToggleUI()
 		return
 	end
 
-	if self._mainFrame.Visible or self._bootFrame.Visible then
+	if (self._mainFrame.Visible or self._bootFrame.Visible) and not self._isBindingKey then
 		self:CloseUI()
 	else
 		self:OpenUI()
@@ -1057,7 +1041,7 @@ function Window:CreateTab(config)
 		self:ShowMain(tab)
 	end)
 
-	-- Background frame (gradient lives here)
+	-- Background frame
 	local sideButton = Instance.new("Frame")
 	sideButton.Name = "SidebarTabButton"
 	sideButton.Size = UDim2.new(1, 0, 0, 30)
