@@ -744,6 +744,39 @@ combatSection:CreateToggle({
 	end,
 })
 
+-- Anti Explode
+local antiExplodeEnabled = false
+local function antiExplodeLoop()
+	workspace.ChildAdded:Connect(function(expPart)
+		if expPart:IsA("Part") and expPart.Name == "Part" and antiExplodeEnabled then
+			local char = player.Character
+			if char then
+				local hrp = char:FindFirstChild("HumanoidRootPart")
+				local rightArm = char:FindFirstChild("Right Arm")
+				if hrp and rightArm and (expPart.Position - hrp.Position).Magnitude <= 20 then
+					hrp.Anchored = true
+					task.wait(0.01)
+					while rightArm:FindFirstChild("RagdollLimbPart") and rightArm.RagdollLimbPart.CanCollide == true do
+						task.wait(0.001)
+					end
+					hrp.Anchored = false
+				end
+			end
+		end
+	end)
+end
+
+combatSection:CreateToggle({
+	Name = "Anti Explode",
+	Default = false,
+	Callback = function(state)
+		antiExplodeEnabled = state
+		if antiExplodeEnabled then
+			task.spawn(antiExplodeLoop)
+		end
+	end,
+})
+
 ----------------------------------------------------------------
 -- VISUAL TAB
 ----------------------------------------------------------------
