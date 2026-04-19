@@ -345,7 +345,7 @@ function Phoenix:CreateWindow(config)
 	loadingFrame.Position = UDim2.new(0.5, -190, 0.5, -130)
 	loadingFrame.BorderSizePixel = 0
 	loadingFrame.ZIndex = 50
-	loadingFrame.Parent = getSafeParent()
+	loadingFrame.Parent = self._gui
 	addCorner(loadingFrame, Theme.CornerRadius)
 
 	local loadingGradient = Instance.new("UIGradient")
