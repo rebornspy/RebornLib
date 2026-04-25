@@ -2014,7 +2014,7 @@ function Section:CreatePlayerDropdown(config)
 
 	local function getPlayerNames()
 		local list = {}
-		for _, plr in ipairs(Players:GetPlayers()) do
+		for _, plr in pairs(Players:GetPlayers()) do
 			table.insert(list, plr.Name)
 		end
 		return list
