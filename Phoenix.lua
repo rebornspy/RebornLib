@@ -1862,7 +1862,7 @@ function Section:CreateDropdown(config)
 	-- Dropdown list
 	local listFrame = Instance.new("ScrollingFrame")
 	listFrame.Name = "List"
-	listFrame.Size = UDim2.new(0, 200, 0, 200)
+	listFrame.Size = UDim2.new(0, 400, 0, 300)
 	listFrame.Position = UDim2.fromScale(0.5, 0.5)
 	listFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 	listFrame.BackgroundColor3 = Theme.AccentHover
@@ -1891,10 +1891,10 @@ function Section:CreateDropdown(config)
 	listLayout.Parent = listFrame
 
 	local padding = Instance.new("UIPadding")
-	padding.PaddingTop = UDim.new(0, 4)
-	padding.PaddingBottom = UDim.new(0, 4)
-	padding.PaddingLeft = UDim.new(0.1, 0)
-	padding.PaddingRight = UDim.new(0.1, 0)
+	padding.PaddingTop = UDim.new(0, 10)
+	padding.PaddingBottom = UDim.new(0, 10)
+	padding.PaddingLeft = UDim.new(0, 10)
+	padding.PaddingRight = UDim.new(0, 10)
 	padding.Parent = listFrame
 
 	local open = false
@@ -1949,7 +1949,7 @@ function Section:CreateDropdown(config)
 				setValue(opt)
 				open = false
 				listFrame.Visible = false
-				listFrame.Size = UDim2.new(0, 110, 0, 0)
+				listFrame.Size = UDim2.new(0, 400, 0, 0)
 			end)
 		end
 	end
@@ -1962,9 +1962,9 @@ function Section:CreateDropdown(config)
 
 		if open then
 			listFrame.Visible = true
-			tween(listFrame, 0.15, { Size = UDim2.new(0, 200, 0, 200) })
+			tween(listFrame, 0.15, { Size = UDim2.new(0, 400, 0, 300) })
 		else
-			tween(listFrame, 0.15, { Size = UDim2.new(0, 110, 0, 0) })
+			tween(listFrame, 0.15, { Size = UDim2.new(0, 400, 0, 0) })
 			task.delay(0.15, function()
 				if not open then
 					listFrame.Visible = false
@@ -2020,7 +2020,7 @@ function Section:CreatePlayerDropdown(config)
 	local function getPlayerNames()
 		local list = {}
 		for _, plr in pairs(Players:GetPlayers()) do
-			table.insert(list, plr.Name)
+			table.insert(list, plr.DisplayName .. "(" .. plr.Name .. ")")
 		end
 		return list
 	end
