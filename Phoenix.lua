@@ -2060,34 +2060,35 @@ function Section:CreatePlayerDropdown(config)
     end)
 
     return {
-    Set = function(value)
-        -- Accept Player instance
-        if typeof(value) == "Instance" and value:IsA("Player") then
-            dropdown.Set(toDisplay(value))
-            return
-        end
+	    Set = function(value)
+	        -- Accept Player instance
+	        if typeof(value) == "Instance" and value:IsA("Player") then
+	            dropdown.Set(toDisplay(value))
+	            return
+	        end
+	
+	        local plr = Players:FindFirstChild(value)
+	        if plr then
+	            dropdown.Set(toDisplay(plr))
+	            return
+	        end
+	
+	        dropdown.Set(value)
+	    end,
 
-        local plr = Players:FindFirstChild(value)
-        if plr then
-            dropdown.Set(toDisplay(plr))
-            return
-        end
-
-        dropdown.Set(value)
-    end,
-
-    Get = function()
-        local displayString = dropdown.Get()
-
-        if displayString == "Select" then
-            return nil
-        end
-
-        return toUsername(displayString)
-    end,
-
-    Refresh = dropdown.Refresh
-}
+	    Get = function()
+	        local displayString = dropdown.Get()
+	
+	        if displayString == "Select" then
+	            return nil
+	        end
+	
+	        return toUsername(displayString)
+	    end,
+	
+	    Refresh = dropdown.Refresh
+	}
+end
 
 -- KEYBIND
 function Section:CreateKeybind(config)
