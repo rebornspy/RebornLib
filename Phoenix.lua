@@ -1856,6 +1856,7 @@ function Section:CreateDropdown(config)
 	button.TextSize = 14
 	button.AutoButtonColor = false
 	button.ZIndex = 23
+	button.TextTruncate = Enum.TextTruncate.AtEnd
 	button.Parent = frame
 	addCorner(button, 6)
 
