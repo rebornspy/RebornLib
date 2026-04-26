@@ -2023,16 +2023,17 @@ function Section:CreatePlayerDropdown(config)
     end
 
     local function toUsername(displayString)
-        return displayString:match("%((.-)%)")
-    end
+	    return displayString:match("%((.-)%)")
+	end
 
     local function getPlayerNames()
-        local list = { "Select" }
-        for _, plr in ipairs(Players:GetPlayers()) do
-            table.insert(list, toDisplay(plr))
-        end
-        return list
-    end
+	    local list = { "Select" }
+	    for _, plr in pairs(Players:GetPlayers()) do
+        	table.insert(list, toDisplay(plr))
+	    end
+	    return list
+	end
+
 
     local dropdown = self:CreateDropdown({
         Name = name,
@@ -2059,24 +2060,34 @@ function Section:CreatePlayerDropdown(config)
     end)
 
     return {
-        Set = function(displayString)
-            dropdown.Set(displayString)
-        end,
+    Set = function(value)
+        -- Accept Player instance
+        if typeof(value) == "Instance" and value:IsA("Player") then
+            dropdown.Set(toDisplay(value))
+            return
+        end
 
-        Get = function()
-            local displayString = dropdown.Get()
-            if displayString == "Select" then
-                return nil, "Select"
-            end
+        local plr = Players:FindFirstChild(value)
+        if plr then
+            dropdown.Set(toDisplay(plr))
+            return
+        end
 
-            local username = toUsername(displayString)
-            local plr = Players:FindFirstChild(username)
-            return plr, displayString
-        end,
+        dropdown.Set(value)
+    end,
 
-        Refresh = dropdown.Refresh
-    }
-end
+    Get = function()
+        local displayString = dropdown.Get()
+
+        if displayString == "Select" then
+            return nil
+        end
+
+        return toUsername(displayString)
+    end,
+
+    Refresh = dropdown.Refresh
+}
 
 -- KEYBIND
 function Section:CreateKeybind(config)
