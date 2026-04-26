@@ -2011,45 +2011,71 @@ end
 
 -- PLAYER DROPDOWN
 function Section:CreatePlayerDropdown(config)
-	local key = config.ConfigKey
-	local name = config.Name or "Players"
+    local key = config.ConfigKey
+    local name = config.Name or "Players"
 
-	if not key then
-		warn("[Phoenix] Missing ConfigKey for PlayerDropdown: " .. tostring(name))
-	end
+    if not key then
+        warn("[Phoenix] Missing ConfigKey for PlayerDropdown: " .. tostring(name))
+    end
 
-	local function getPlayerNames()
-		local list = {}
-		for _, plr in pairs(Players:GetPlayers()) do
-			table.insert(list, plr.DisplayName .. " (" .. plr.Name .. ")")
-		end
-		return list
-	end
+    local function toDisplay(plr)
+        return plr.DisplayName .. " (" .. plr.Name .. ")"
+    end
 
-	local dropdown = self:CreateDropdown({
-		Name = name,
-		Options = { "Select", getPlayerNames() },
-		Default = config.Default or "Select",
-		ConfigKey = key,
-		Callback = function(selected)
-			if config.Callback then
-				local plr = Players:FindFirstChild(selected)
-				config.Callback(plr, selected)
-			end
-		end,
-	})
+    local function toUsername(displayString)
+        return displayString:match("%((.-)%)")
+    end
 
-	dropdown.Refresh(getPlayerNames())
-	
-	Players.PlayerAdded:Connect(function()
-		dropdown.Refresh(getPlayerNames())
-	end)
+    local function getPlayerNames()
+        local list = { "Select" }
+        for _, plr in ipairs(Players:GetPlayers()) do
+            table.insert(list, toDisplay(plr))
+        end
+        return list
+    end
 
-	Players.PlayerRemoving:Connect(function()
-		dropdown.Refresh(getPlayerNames())
-	end)
+    local dropdown = self:CreateDropdown({
+        Name = name,
+        Options = getPlayerNames(),
+        Default = config.Default or "Select",
+        ConfigKey = key,
+        Callback = function(selected)
+            if config.Callback then
+                local username = toUsername(selected)
+                local plr = Players:FindFirstChild(username)
+                config.Callback(plr, selected)
+            end
+        end,
+    })
 
-	return dropdown
+    dropdown.Refresh(getPlayerNames())
+
+    Players.PlayerAdded:Connect(function()
+        dropdown.Refresh(getPlayerNames())
+    end)
+
+    Players.PlayerRemoving:Connect(function()
+        dropdown.Refresh(getPlayerNames())
+    end)
+
+    return {
+        Set = function(displayString)
+            dropdown.Set(displayString)
+        end,
+
+        Get = function()
+            local displayString = dropdown.Get()
+            if displayString == "Select" then
+                return nil, "Select"
+            end
+
+            local username = toUsername(displayString)
+            local plr = Players:FindFirstChild(username)
+            return plr, displayString
+        end,
+
+        Refresh = dropdown.Refresh
+    }
 end
 
 -- KEYBIND
